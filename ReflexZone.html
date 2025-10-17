@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReflexZone</title>
+    <style>
+        /* sidebar / hamburger styles */
+        .hamburger {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            width: 36px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            background: #ffffffcc;
+            border-radius: 2px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -260px; /* hidden by default */
+            width: 260px;
+            height: 100%;
+            background: #1A1A1A; /* replaced purple gradient with specified hex */
+            box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+            padding: 48px 24px;
+            transition: left 260ms ease-in-out;
+            z-index: 1000;
+            color: white;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 8px;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .centered-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* remove fixed height so the box sits naturally, add a small top margin */
+            margin-top: 24px;
+        }
+        .blue-box {
+            background-color: #1A1A1A;
+            padding: 25px 40px; /* scaled 1.5x */
+            border-radius: 24px; /* scaled 1.5x */
+            box-shadow: 0 3px 12px rgba(33,150,243,0.18);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 24px; /* scaled 1.5x */
+        }
+        .blue-box h1 {
+            color: white;
+            margin: 0;
+            /* use a serif font as requested */
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            /* slightly smaller, explicit size so we can match the image */
+            font-size: 3.375rem; /* 2.25rem * 1.5 */
+            text-align: left;
+            line-height: 1;
+        }
+        /* make the logo slightly smaller to match the heading */
+        .blue-box img.logo {
+            height: 2.25rem; /* 1.5rem * 1.5 */
+            width: auto;
+            object-fit: cover;
+            border-radius: 9px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+            display: block;
+        }
+        /* hero section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            max-width: 1100px;
+            margin: 32px auto;
+            padding: 24px;
+        }
+        .hero .hero-content {
+            flex: 1 1 520px;
+            text-align: left;
+        }
+        .hero h2 {
+            margin: 0 0 12px 0;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 2rem;
+            color: #111;
+        }
+        .hero .hero-copy {
+            margin: 0 0 16px 0;
+            color: #333;
+            max-width: 36rem;
+        }
+        .hero .hero-image {
+            width: 360px;
+            height: 220px;
+            background: #e6e6e6;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            flex: 0 0 360px;
+        }
+        .btn {
+            display: inline-block;
+            background: #1A1A1A;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .btn:hover { opacity: 0.92; }
+    </style>
+</head>
+<body>
+    <!-- hamburger button -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- off-canvas sidebar -->
+    <nav class="sidebar" id="sidebar" aria-hidden="true">
+        <a href="ReflexZoneShop.html" id="shop-link">Shop</a>
+        <a href="AboutUs.html" id="about-link">About</a>
+    </nav>
+
+    <div class="centered-box">
+        <div class="blue-box">
+              <img src="file:///Users/matthieubrou/Downloads/Vscode/goalkeeper+image.webp" alt="Goalkeeper" class="logo">
+            <h1>ReflexZone</h1>
+        </div>
+    </div>
+
+    <!-- hero section -->
+    <section class="hero" aria-labelledby="hero-heading">
+        <div class="hero-content">
+            <h2 id="hero-heading">Train Like a Pro, Defend Like a Champion</h2>
+            <p class="hero-copy">Unlock your full potential with our all-in-one goalkeeper training system. Designed by pros, built for every level — train smarter, faster, and stronger on your own schedule.</p>
+            <a class="btn" href="AboutUs.html">More About Us</a>
+        </div>
+        <div class="hero-image" role="img" aria-label="Image placeholder"></div>
+    </section>
+
+    <script>
+        // Toggle sidebar open/close
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+
+        function toggleSidebar() {
+            const open = sidebar.classList.toggle('open');
+            sidebar.setAttribute('aria-hidden', !open);
+            hamburger.setAttribute('aria-expanded', open);
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+
+        // close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.classList.contains('open')) return;
+            if (e.target === hamburger || hamburger.contains(e.target)) return;
+            if (sidebar.contains(e.target)) return;
+            sidebar.classList.remove('open');
+            sidebar.setAttribute('aria-hidden', 'true');
+            hamburger.setAttribute('aria-expanded', 'false');
+        });
+    </script>
+</body>
+</html>
